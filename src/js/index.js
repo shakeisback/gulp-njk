@@ -4,39 +4,46 @@ import { getMovies } from './http';
 /*
  * Chunks
  */
-import { moneys, products } from './shop/data';
-import {
-  renderShopList,
-  renderMiddleBasket,
-  renderGlobalBasket,
-} from './shop/renders';
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  /**
-   * SHop
-   */
-  const addBtn = document.getElementById('add');
-  const buyBtn = document.getElementById('buy');
 
-  renderShopList();
+    btnSearch.addEventListener("click", e => {
+        list.innerHTML = '';
+        getMovies(searchFilm.value, res => {
 
-  addBtn.onclick = () => {
-    const count = parseFloat(document.querySelector('#txt').value);
-    const control = document.querySelector('input[name="product"]:checked');
-    if (!control || !count) return alert('Введіть усі дані');
-    const name = control.value;
+            res.Search.forEach(i => {
+                console.log(i);
+                let item = document.createElement('li');
+                item.className = 'item';
+                let imgWrap = document.createElement('div');
+                imgWrap.classList = 'imgWrap';
+                let tytleWrap = document.createElement('div');
+                tytleWrap.classList = 'tytleWrap';
+                let movieTitle = document.createElement('h4');
+                let movieType = document.createElement('p');
+                let movieYear = document.createElement('p');
+                imgWrap.style.backgroundImage = `url(${i.Poster})`;
+                imgWrap.style.backgroundSize = "cover";
+                movieTitle.innerHTML = i.Title;
+                movieType.innerHTML = i.Type;
+                movieYear.innerHTML = i.Year;
+                tytleWrap.append(movieTitle);
+                item.append(imgWrap);
+                item.append(tytleWrap);
+                item.append(movieType);
+                item.append(movieYear);
+                list.append(item);
 
-    const neededProduct = products.find(i => i.name === name);
-    neededProduct.toMiddleShop(count);
-    renderMiddleBasket();
-  };
+            })
 
-  buyBtn.onclick = () => {
-    const monitor = document.querySelector('#monitor');
-    const area = document.querySelector('#area');
-    area.value = '';
-    products.forEach(i => i.buy());
-    renderGlobalBasket();
-    renderShopList();
-  };
+
+        });
+
+    })
+
+
+
+
 });
