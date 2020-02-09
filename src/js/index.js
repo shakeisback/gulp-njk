@@ -1,49 +1,51 @@
 import '@babel/polyfill';
 import './advanced-6';
-import { getMovies } from './http';
-/*
- * Chunks
- */
+import Vue from 'vue/dist/vue.esm.js';
+
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    var app5 = new Vue({
+        el: '#app',
+        delimiters: ['${', '}'],
+        data: {
+            todos: [
+                { text: 'Learn JavaScript' },
+                { text: 'Learn Vue' },
+                { text: 'Learn Html' },
+                { text: 'Learn Css' },
+                { text: 'Learn Node.js' }
+            ]
+        },
+        methods: {
+            removeItem(currentEl) {
+                this.todos = this.todos.filter(function(task, index) {
+                    return index !== currentEl;
+                })
+            }
+        }
+    });
 
-    btnSearch.addEventListener("click", e => {
-        list.innerHTML = '';
-        getMovies(searchFilm.value, res => {
-
-            res.Search.forEach(i => {
-                console.log(i);
-                let item = document.createElement('li');
-                item.className = 'item';
-                let imgWrap = document.createElement('div');
-                imgWrap.classList = 'imgWrap';
-                let tytleWrap = document.createElement('div');
-                tytleWrap.classList = 'tytleWrap';
-                let movieTitle = document.createElement('h4');
-                let movieType = document.createElement('p');
-                let movieYear = document.createElement('p');
-                imgWrap.style.backgroundImage = `url(${i.Poster})`;
-                imgWrap.style.backgroundSize = "cover";
-                movieTitle.innerHTML = i.Title;
-                movieType.innerHTML = i.Type;
-                movieYear.innerHTML = i.Year;
-                tytleWrap.append(movieTitle);
-                item.append(imgWrap);
-                item.append(tytleWrap);
-                item.append(movieType);
-                item.append(movieYear);
-                list.append(item);
-
-            })
-
-
-        });
-
+    var vue2 = new Vue({
+        el: '#app2',
+        delimiters: ['${', '}'],
+        data: {
+            taskList: [
+                { text: '1: Learn JavaScript' },
+                { text: '2: Learn Vue' },
+                { text: '3: Learn Html' },
+                { text: '4: Learn Css' },
+                { text: '5: Learn Node.js' },
+            ],
+        },
+        methods: {
+            randomTask() {
+                this.taskList.sort(function(a, b) {
+                    return 0.5 - Math.random();
+                })
+            }
+        }
     })
-
-
-
 
 });

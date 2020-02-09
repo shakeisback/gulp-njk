@@ -2,12 +2,25 @@
 {% extends "layouts/master.njk" %}
 
 {% block content %}
+<div id="app">
+<ul>
+ <li v-for="(todo, indexList) in todos">
+ <button  v-on:click="removeItem(indexList)">
+  ${todo.text}
+ </button>
+ </li>
+</ul>
+</div>
 
-    <div class="conatainer">
-    <div class="form-wrap"> 
-    <input type="text" id="searchFilm" placeholder="Enter title of movie">
-    <button type="button" class="btn" id="btnSearch">Search</button>
+<h1>Random tasklist</h1>
+
+<div id="app2">
+        <ul v-bind="randomTask()">
+            <li  v-for="(task, index) in taskList">
+                ${task.text}
+            </li>
+        </ul>
     </div>
-    <ul class="list"  id="list"></ul>
-    </div> 
+
+   
     {% endblock %}
